@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>New Page</h1>
+
+    <div>
+        <h1>Entry already in the wiki </h1>
+
+        <h3>
+            <a href="{% url 'index' %}">Home</a>
+        </h3>
+
+    </div>
+
+{% endblock %}
