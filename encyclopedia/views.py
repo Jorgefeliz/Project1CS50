@@ -29,7 +29,7 @@ def NewPage(request):
             if entry.lower() == title.lower():
                 return render(request, "encyclopedia/EntryError.html")
 
-        util.save_entry(title, content)
+        util.save_entry(title.lower(), content)
 
         return render(request, "encyclopedia/index.html")
 
@@ -38,5 +38,34 @@ def NewPage(request):
 
 
 def wiki(request, title):
-    return HttpResponse("Hello, {title}")
-    
+    #return HttpResponse(f"Hello, {title}")
+    content = util.get_entry(title)
+    if content == None:
+        return render(request, "encyclopedia/EntryNotFound.html")
+
+    else:
+        return render (request, "encyclopedia/entry.html" , {
+            "title": title.capitalize(),
+            "content": content
+            })
+
+def search(request):
+    if request.method =="POST":
+
+        parcialMatch = []
+        title = request.POST.get('q')
+        entries = util.list_entries()
+
+        for entry in entries:
+            if entry.lower() == title.lower():
+                return render (request, "encyclopedia/entry.html" , {
+                "title": title.capitalize(),
+                "content": util.get_entry(title)
+                })
+            elif entry.find(title) != -1:
+                parcialMatch.append(entry)
+        
+        return render(request, "encyclopedia/searchResults.html", {
+        "entries": parcialMatch,
+        "number" : len(parcialMatch)
+    })
