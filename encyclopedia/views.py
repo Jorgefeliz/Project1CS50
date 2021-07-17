@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse
+import random
 
 from . import util
 
@@ -45,7 +46,7 @@ def wiki(request, title):
 
     else:
         return render (request, "encyclopedia/entry.html" , {
-            "title": title.capitalize(),
+            "title": title,
             "content": content
             })
 
@@ -69,3 +70,33 @@ def search(request):
         "entries": parcialMatch,
         "number" : len(parcialMatch)
     })
+
+def edit(request, title):
+    if request.method == "GET":
+        content = util.get_entry(title)
+        print("ok")
+
+        return render (request, "encyclopedia/edit.html" , {
+            "title": title,
+            "content": content
+                })
+#PENDIENTE  
+def save(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    print(title)
+    print("almost done")
+    return render(request, "encyclopedia/index.html")
+
+def randomPage(request):
+    entries = util.list_entries()
+    lenght = len(entries)
+    entry_show = random.randint(0, lenght)
+
+    title = entries[entry_show]
+    content = util.get_entry(title)
+
+    return render (request, "encyclopedia/entry.html" , {
+        "title": title,
+        "content": content
+        })
