@@ -7,13 +7,11 @@
 {% block body %}
     <h1>{{title}}</h1>
 
-    <div>
-        <p>
-            {{content}}
-        </p>
+ 
+        
+            {{content | safe }}
         
 
-    </div>
 
     <center>
     <form action="edit/{{title}}" method="GET" >

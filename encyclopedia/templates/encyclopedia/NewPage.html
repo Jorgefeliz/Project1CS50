@@ -13,11 +13,8 @@
         <form action="{% url 'NewPage' %}" method="post">
             {% csrf_token %}
         
-            <label for="titulo">Title: </label><br>
-            <input type="text" id="title" name="title"><br><br>
-            <label for="content">Content: </label><br>
-            <textarea id="content" name="content"> </textarea><br>
-        <input type="submit">
+            {{ form }}
+            <input type="submit">
 
         </form>
 
