@@ -91,36 +91,32 @@ def edit(request, title):
         data = {'title': title,
                 'content': content}
 
-        print("ok")
-        return render (request, "encyclopedia/edit.html" , {
-            'title': title,
-            'content': content
-            })
-        #return render (request, "encyclopedia/edit.html" , {"form": wikiForm(data)})
+        return render (request, "encyclopedia/edit.html" , {"form": wikiForm(data)})
 
 #PENDIENTE  
 def save(request):
-    title = request.POST.get('title')
-    content = request.POST.get('content')
-    print(title)
-    print(content)
-    if title == None:
-        title = "test"
-    util.save_entry(title,content)
-    return render(request, "encyclopedia/entry.html", {
-        "title": title,
-        "content": content
-        })
+
+    form = wikiForm(request.POST)
+    if form.is_valid():
+        title = form.cleaned_data["title"]
+        content = form.cleaned_data["content"]
+
+        util.save_entry(title,content)
+        return render(request, "encyclopedia/entry.html", {
+            "title": title,
+            "content": content
+                })
 
 def randomPage(request):
     entries = util.list_entries()
-    lenght = len(entries)
+    lenght = len(entries)-1
     entry_show = random.randint(0, lenght)
 
     title = entries[entry_show]
     content = util.get_entry(title)
-
+    
+    markConvertion = Markdown()
     return render (request, "encyclopedia/entry.html" , {
         "title": title,
-        "content": content
+        "content": markConvertion.convert(content)
         })

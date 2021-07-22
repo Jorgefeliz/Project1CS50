@@ -12,12 +12,11 @@
         <form action="{% url 'save' %}" method="POST">
             {% csrf_token %}
             <label> Title: </label>
-            <input type="text" id="title" name="title" value="{{title}}"><br>
-            <textarea id="content" name="content">
-                {{content}}
-            </textarea><br>
+            {{ form.title }}<br><br>
+            <label> Content: </label><br>
+            {{ form.content}}<br>
             
-            <button type="submit">Save</button>
+            <button type="submit" class="btn btn-outline-primary">Save</button>
         </form>
         
 
