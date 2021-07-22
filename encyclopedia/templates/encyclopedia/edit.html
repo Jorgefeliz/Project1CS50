@@ -8,10 +8,11 @@
     <h1>{{title}}</h1>
 
     <div>
-        <label> Title: </label>
-        <input type="text" id="title" name="title" value="{{title}}"><br>
+
         <form action="{% url 'save' %}" method="POST">
             {% csrf_token %}
+            <label> Title: </label>
+            <input type="text" id="title" name="title" value="{{title}}"><br>
             <textarea id="content" name="content">
                 {{content}}
             </textarea><br>

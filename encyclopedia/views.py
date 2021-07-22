@@ -87,12 +87,17 @@ def search(request):
 def edit(request, title):
     if request.method == "GET":
         content = util.get_entry(title)
-        print("ok")
 
+        data = {'title': title,
+                'content': content}
+
+        print("ok")
         return render (request, "encyclopedia/edit.html" , {
-            "title": title,
-            "content": content
-                })
+            'title': title,
+            'content': content
+            })
+        #return render (request, "encyclopedia/edit.html" , {"form": wikiForm(data)})
+
 #PENDIENTE  
 def save(request):
     title = request.POST.get('title')
